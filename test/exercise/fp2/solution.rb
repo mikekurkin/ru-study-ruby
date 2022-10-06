@@ -15,7 +15,15 @@ module Exercise
       end
 
       # Написать свою функцию my_map
-      def my_map; end
+      def my_map(&block)
+        return self if empty?
+
+        first, *rest = self
+        mapped_first = yield first
+        mapped_rest = self.class.new(rest).my_map(&block)
+
+        self.class.new([mapped_first] + mapped_rest)
+      end
 
       # Написать свою функцию my_compact
       def my_compact; end

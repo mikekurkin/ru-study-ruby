@@ -5,7 +5,14 @@ module Exercise
       # Использовать свои написанные функции для реализации следующих - можно.
 
       # Написать свою функцию my_each
-      def my_each; end
+      def my_each(&block)
+        if any?
+          first, *rest = self
+          yield first
+          self.class.new(rest).my_each(&block)
+        end
+        self
+      end
 
       # Написать свою функцию my_map
       def my_map; end

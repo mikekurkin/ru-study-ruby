@@ -1,8 +1,18 @@
 module Exercise
   module Arrays
     class << self
+      def max_val(array)
+        return nil if array.empty?
+        return array.first if array.one?
+
+        first, *rest = array
+        max_of_rest = max_val(rest)
+
+        first > max_of_rest ? first : max_of_rest
+      end
+
       def replace(array)
-        array.map { |el| el.positive? ? array.max : el }
+        array.map { |el| el.positive? ? max_val(array) : el }
       end
 
       def search(array, query)

@@ -23,8 +23,17 @@ module Exercise
         filtered_ratings.reduce(:+).to_f / filtered_ratings.length
       end
 
-      def chars_count(_films, _threshold)
-        0
+      def chars_count(films, threshold)
+        filtered_films =
+          films
+          .reduce([]) do |acc, film|
+            film['rating_kinopoisk'].to_f >= threshold ? acc << film : acc
+          end
+
+        filtered_films
+          .map { |film| film['name'].to_s }
+          .map { |name| name.count('и') }
+          .reduce(:+)
       end
     end
   end

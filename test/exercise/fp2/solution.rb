@@ -29,7 +29,14 @@ module Exercise
       def my_compact; end
 
       # Написать свою функцию my_reduce
-      def my_reduce; end
+      def my_reduce(acc = nil, &block)
+        return acc if empty?
+
+        first, *rest = self
+        acc = acc.nil? ? first : yield(acc, first)
+
+        self.class.new(rest).my_reduce(acc, &block)
+      end
     end
   end
 end

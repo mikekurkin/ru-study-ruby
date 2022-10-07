@@ -26,7 +26,11 @@ module Exercise
       end
 
       # Написать свою функцию my_compact
-      def my_compact; end
+      def my_compact
+        my_reduce(self.class.new) do |acc, el|
+          el.nil? ? acc : acc << el
+        end
+      end
 
       # Написать свою функцию my_reduce
       def my_reduce(acc = nil, &block)

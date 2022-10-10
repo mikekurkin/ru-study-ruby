@@ -6,23 +6,19 @@ module Exercise
 
       # Написать свою функцию my_each
       def my_each(&block)
-        if any?
-          first, *rest = self
-          yield first
-          self.class.new(rest).my_each(&block)
-        end
+        return self if empty?
+
+        first, *rest = self
+        yield first
+        self.class.new(rest).my_each(&block)
         self
       end
 
       # Написать свою функцию my_map
-      def my_map(&block)
-        return self if empty?
-
-        first, *rest = self
-        mapped_first = yield first
-        mapped_rest = self.class.new(rest).my_map(&block)
-
-        self.class.new([mapped_first] + mapped_rest)
+      def my_map(&_block)
+        my_reduce(self.class.new) do |acc, el|
+          acc << (yield el)
+        end
       end
 
       # Написать свою функцию my_compact
